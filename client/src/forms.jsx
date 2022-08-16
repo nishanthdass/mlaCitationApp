@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ResultText from './textarea'
+import './App.css'
 
 
 export default function IsbnForm(props) {
@@ -8,14 +9,21 @@ export default function IsbnForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    ResultText({bookVal}, {authorVal})
+    fetch('http://localhost:3001/api/people')
+    .then((response) => response.json())
+    .then((data) => show(data));
 
     // console.log({bookVal})
     // console.log({authorVal})
     const author = JSON.stringify(authorVal)
     const book = JSON.stringify(bookVal)
     console.log(typeof book, book)
-    document.getElementById('resultTextarea').innerHTML += "The book you want to cite is " + book + " and the author is " + author + "."
+    function show(data){
+      console.log(data)
+      document.getElementById('resultTextarea').innerHTML += "FrontEnd Says: The book you want to cite is " + book + " and the author is " + author + ". BackEnd Says: " + data[0].name
+
+    }
+
     setAuthor('')
     setBook('')
   }

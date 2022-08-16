@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import IsbnForm from './forms'
+import './App.css'
 
 
 export default function ResultText(props) {

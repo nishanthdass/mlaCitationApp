@@ -1,5 +1,17 @@
 const express = require('express')
+const router = express.Router();
+const bodyParser = require('body-parser');
 const app = express()
+
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
+
 
 let people = [
     {
@@ -20,7 +32,7 @@ let people = [
   ]
 
   app.get('/', (request, response) => {
-      response.send('<h1>Phonebook</h1>')
+      response.send('<h1>Dummy data from server</h1>')
   })
 
   app.get('/api/people', (request, response) => {
