@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ResultText from './textarea'
 import './App.css'
 
@@ -6,22 +6,23 @@ import './App.css'
 export default function IsbnForm(props) {
   const [authorVal, setAuthor] = useState('');
   const [bookVal, setBook] = useState('');
-  
-
+  useEffect(() => {
+    document.getElementById('resultTextarea').innerHTML += authorVal
+  });
   const handleSubmit = (e) => {
     e.preventDefault()
     const author = JSON.stringify(authorVal)
     const book = JSON.stringify(bookVal)
-  if (author.length > 2 || book.length > 2) {
-    console.log(author.length)
-    fetch('http://localhost:3001/api/people',  {  
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        "author" : author,
-        "book" : book
-      }),
-  })
+    if (author.length > 2 || book.length > 2) {
+      console.log(author.length)
+      fetch('http://localhost:3001/api/people',  {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "author" : author,
+          "book" : book
+        }),
+      })
       // .then(res => res.json())
       // .then(data => console.log(data))
   }
