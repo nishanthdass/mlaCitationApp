@@ -1,11 +1,9 @@
 #root {
-  /* max-width: 1280px; */
-  width: 400px;
-  height: 600px;
-  background-color: rgb(204, 249, 249);
+  width: 600px;
+  height: 500px;
+  background-color:  #3d3d3f;
   margin: 0 auto;
-  padding: 2rem;
-  /* text-align: center; */
+  padding: .2rem;
 }
 
 .logo {
@@ -43,7 +41,139 @@
   color: #888;
 }
 
-textarea {
-  width: 400px;
-  height: 400px;
+.resultTextarea {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 99%;
+  height: 430px;
+  margin-top:5%;
+  font-size: 1rem;
+  background-color: #f6f5f3;
+  color: #3d3d3f;
+}
+
+.input-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: .015rem;
+  width: 510px;
+  position: relative;
+  /* display: inline-block; */
+  /* position: relative; */
+}
+
+.search-wrap{
+  float: left;
+}
+
+
+::placeholder {
+  color:#3d3d3f;
+  opacity: .6; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color:#3d3d3f;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color:#3d3d3f;
+}
+
+input {
+  font-size: 1rem;
+  background-color:#f6f5f3;
+  color: #3d3d3f;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 50em;
+  background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+  background-color: #f6f5f3;
+  background-size: contain;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input[type="search"]:focus::-webkit-search-cancel-button {
+  opacity: .3;
+  pointer-events: all;
+}
+
+input[type="search"].dark::-webkit-search-cancel-button {
+  filter: invert(1);
+}
+
+.selection-stack {
+  z-index: 3;
+  position:absolute;
+}
+
+.selection {
+  border: 1px solid rgba(125,206,148, 0.675);
+  max-width: 398px;
+  min-width: 398px;
+}
+
+.div-header {
+  background-color:  #f6f5f3;
+  color: #3d3d3f;
+  font-size: 12px;
+  margin-bottom: 0px ;
+  margin-top: 0px ;
+  overflow:hidden;
+}
+
+.div-body {
+  background-color: #f6f5f3;
+  color: #3d3d3f;
+  margin-bottom: 0px ;
+  margin-top: 0px ;
+  overflow:hidden;
+}
+
+label {
+  color:  #f9f8fd;
+}
+
+.tool-bar {
+  position: relative;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  color:  #f9f8fd;
+}
+
+.select-format {
+  float: right;
+}
+
+select option {
+  background-color:  #f6f5f3;
+  color: #3d3d3f;
+  font-size: 12px;
+}
+
+select {
+  background-color:  #f6f5f3;
+  color: #3d3d3f;
+  font-size: 12px;
+  height: 25px;
+}
+
+.root-wrap {
+  justify-content: center;
+}
+
+.header-labels {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 300px;
+  
 }

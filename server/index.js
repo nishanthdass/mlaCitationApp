@@ -20,14 +20,15 @@ app.use(cors(corsOptions)) // Use this after the variable declaration
 
 app.post('/api/people', asyncHandler(async (req, res, next) => {
   // Search by author and book using a single request with two arguments
-  const author = req.body.author
-  const book = req.body.book
-  const bookreq = 'https://www.googleapis.com/books/v1/volumes?q=' + book + '+inauthor:' + author + '&key=AIzaSyBlnP16EnK-N_iacoF9rURiFht-C2mls2o'
+  // const author = req.body.author
+  // const book = req.body.book
+  // const bookreq = 'https://www.googleapis.com/books/v1/volumes?q=' + book + '+inauthor:' + author + '&key=AIzaSyBlnP16EnK-N_iacoF9rURiFht-C2mls2o'
   const bookArray = []
 
   // Search by author or book using a single request with one argument
-  // const searchterm = req.body.author
+  const searchterm = req.body.searchterm
   // const bookreq = 'https://www.googleapis.com/books/v1/volumes?q=' + searchterm + '&key=AIzaSyBlnP16EnK-N_iacoF9rURiFht-C2mls2o'
+  const bookreq = 'https://www.googleapis.com/books/v1/volumes?q=' + searchterm
 
   const sendGetRequest = async () => {
     try {
@@ -50,9 +51,9 @@ app.post('/api/people', asyncHandler(async (req, res, next) => {
     }
   };
   await sendGetRequest()
-  console.log(bookArray)
-  console.log(bookArray.length)
-  res.end()
+  // console.log(bookArray)
+  // console.log(bookArray.length)
+  res.send(bookArray)
 }));
 
   const PORT = 3001

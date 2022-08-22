@@ -3,60 +3,75 @@ import ResultText from './textarea'
 import './App.css'
 
 
-export default function IsbnForm(props) {
-  const [authorVal, setAuthor] = useState('');
-  const [bookVal, setBook] = useState('');
+export default function IsbnForm() {
+  const [searchVal, setSearch] = useState('');
+  const [options, setOptions] = useState([])
+  const results = []
+
+  
   useEffect(() => {
-    document.getElementById('resultTextarea').innerHTML += authorVal
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const author = JSON.stringify(authorVal)
-    const book = JSON.stringify(bookVal)
-    if (author.length > 2 || book.length > 2) {
-      console.log(author.length)
-      fetch('http://localhost:3001/api/people',  {
+    const dataSelectTemplate = document.querySelector('[data-selection]')
+    const dataSelectStackTemplate = document.querySelector('[data-selection-stack]')
+    const dataHeader = document.querySelector('[data-header]')
+  
+    async function fetchData() {
+    dataSelectStackTemplate.innerHTML = "";
+    if (searchVal.length > 2)  {
+      const searchterm = JSON.stringify(searchVal)
+
+      await fetch('http://localhost:3001/api/people',  {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          "author" : author,
-          "book" : book
+          "searchterm" : searchterm
         }),
       })
-      // .then(res => res.json())
-      // .then(data => console.log(data))
-  }
-    function show(data){
-      // document.getElementById('resultTextarea').innerHTML += "FrontEnd Says: The book you want to cite is " + book + " and the author is " + author + ". BackEnd Says: The book you want to cite is " + data.book +  " and the author is " + data.author + "."
-      document.getElementById('resultTextarea').innerHTML += data
+      .then(res => res.json())
+      .then(data => data.forEach(element => {
+        const selectCell = dataSelectTemplate.content.cloneNode(true).children[0]
+        const headerCell = selectCell.children[0]
+        const bodyCell = selectCell.children[1]
+  
+        headerCell.textContent = element.text
+        bodyCell.textContent = element.id
+        const stackLength = dataSelectStackTemplate.children.length;
 
+        if (stackLength > 9 ){
+          dataSelectStackTemplate.innerHTML = "";
+        }
+        dataSelectStackTemplate.prepend(selectCell)
+      }
+      ))
     }
-    // setAuthor('')
-    // setBook('')
+    setOptions(
+      results, {key: 'Select a book', value: ''}
+    )
   }
+    fetchData();
+  }, [searchVal]);
 
   return (
-        <form onChange={handleSubmit}>
-        <label>Author Name Request:</label>
-        <br />
-        <input 
-          name='authorVal' 
-          type='text'
-          value={authorVal}
-          onChange={e => setAuthor(e.target.value)}
+    <>
+    <div className='search-wrap'>
+    <div className='input-search-wrap'>
+      <input 
+        id="search-ele"
+        type='search' 
+        placeholder='Book or Author name'
+        value={searchVal}
+        onChange={e => setSearch(e.target.value)}
         />
-        <br/>
-        <label>Book Name Request:</label>
-        <br />
-        <input 
-          name='bookVal' 
-          type='text' 
-          value={bookVal}
-          onChange={e => setBook(e.target.value)}
-        />
-        <br />
-        <button> Cite </button>
-      </form>
-      );
+    </div>
+    <div className='selection-stack' data-selection-stack></div>
+    <div className='selection-window'>
+      <template data-selection
+          dangerouslySetInnerHTML={{
+            __html: "<div class='selection'><div class='div-header' data-header>header</div> <div class='div-body' data-body>body</div></div>"
+          }}
+      />
+    </div>
+    </div>
+    </>
+    );
   };
   
