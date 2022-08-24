@@ -6,7 +6,7 @@ export default function PageInput(props) {
   return (
     <>
     <div className='page-number-wrap'>
-    <label htmlFor="page-input">Page num:</label>
+    <label htmlFor="page-input">page num:</label>
     <input className='page-input' type='text' id="page-input-id"/> 
     </div>
 

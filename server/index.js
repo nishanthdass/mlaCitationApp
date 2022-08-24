@@ -36,7 +36,6 @@ app.post('/api/people', asyncHandler(async (req, res, next) => {
         if (resp.data.items !== undefined){
           const data = resp.data.items;
           for (const element of data) {
-            // console.log(element.title)
             const bookId = element.id
             const title = element.volumeInfo.title
             const author = element.volumeInfo.authors
@@ -51,8 +50,6 @@ app.post('/api/people', asyncHandler(async (req, res, next) => {
     }
   };
   await sendGetRequest()
-  // console.log(bookArray)
-  console.log(bookArray.length)
   res.send(bookArray)
 }));
 

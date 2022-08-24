@@ -4,15 +4,38 @@ import HandleData from './handleselection';
 import './App.css'
 
 
-export default function FetchedSearchList() {
+// function handleDropdownClickOut(ref){
+//   const [isSelected, setIsSelected] = useState(false)
+
+//   useEffect(() => {
+//     function handleClickOutside(event) {
+//       console.log(ref.current.children)
+//       if (ref.current && !ref.current.contains(event.target)) {
+//         ref.current.children[2].style.display = "none"
+//       } 
+//       else if (ref.current) {
+//         ref.current.children[2].style.display = "block"
+//       }
+//     }
+//     // Bind the event listener
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       // Unbind the event listener on clean up
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   },[ref])
+// }
+
+
+export default function FetchedSearchList(props) {
   const [searchVal, setSearch] = useState('');
   const [resultsVal, setResults] = useState([])
-  let dataCollection = {}
+  const [isSelected, setIsSelected] = useState(false)
+
+  const wrapperref = useRef()
 
   useEffect(() => {
-
     async function fetchData() {
-    // if (searchVal.length > 2)  {
       const searchterm = JSON.stringify(searchVal)
       await fetch('http://localhost:3001/api/people',  {
         method: 'post',
@@ -23,37 +46,30 @@ export default function FetchedSearchList() {
       })
       .then(res => res.json())
       .then(data => setResults(data))
-    // }
-  }
-
+  } 
     fetchData();
+    document.addEventListener("mousedown", (event) => { if (wrapperref.current && !wrapperref.current.contains(event.target)){setIsSelected(false)}});
   }, [searchVal]);
-
-
-  function searchQuery(evt) {
-    const value = evt.target.value
-    setSearch(value)
-}
-
-
-// console.log(Object.keys(resultsVal))
 
   return (
     <>
-    <div className='search-wrap'>
+    <div className='search-wrap' ref={wrapperref}>
     <label htmlFor="search-ele">Search Books API:</label>
     <div className='input-search-wrap'>
-      <input 
+      <input
         id="search-ele"
         type='search' 
         placeholder='Book or Author name'
+        autoComplete="off"
         value={searchVal}
-        onChange={searchQuery}
+        onChange={e => setSearch(e.target.value)}
+        onClick={e => setIsSelected(true)}
         />
     </div>
+    {isSelected &&
     <div className='selection-stack'>
-    {Object.keys(resultsVal).map( (item, i) => <div onClick={ () => HandleData(i)} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}</div></div>)}
-    </div>
+    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {HandleData(i), setIsSelected(false)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
+    </div>}
     </div>
     </>
     );

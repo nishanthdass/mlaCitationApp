@@ -97,6 +97,7 @@ input {
 
 
 .selection-stack {
+  /* display: none; */
   z-index: 3;
   position:absolute;
 }
@@ -186,15 +187,4 @@ select {
   display: grid;
   grid-auto-flow: column;
   /* grid-column-gap: 300px; */
-}
-
-
-#search-ele:focus {
-  /* display: none; */
-  background-color: yellow;
-}
-
-#search-ele:not(:focus) {
-  /* display: none; */
-  background-color: rgb(0, 255, 221);
 }
