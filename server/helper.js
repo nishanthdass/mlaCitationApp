@@ -3,7 +3,7 @@ exports.formatbook = function(bookId, booknameObj, authorObj, publisherObj, publ
     // const text = bookId + " '" + booknameObj + "', " +  authorObj + ", " +  publisherObj + ", " +  publishedDateObj
     const text = booknameObj
 
-    const bookSelectObj = {id: bookId, text: text }
+    const bookSelectObj = {id: bookId, text: text, data: bookId, booknameObj, authorObj, publisherObj }
     // console.log(bookSelectObj)
     return bookSelectObj
  }

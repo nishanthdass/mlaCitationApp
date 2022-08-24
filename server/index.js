@@ -36,13 +36,13 @@ app.post('/api/people', asyncHandler(async (req, res, next) => {
         if (resp.data.items !== undefined){
           const data = resp.data.items;
           for (const element of data) {
-            // console.log(element.id)
+            // console.log(element.title)
             const bookId = element.id
             const title = element.volumeInfo.title
             const author = element.volumeInfo.authors
             const publisher = element.volumeInfo.publisher
             const publishDate = element.volumeInfo.publishedDate
-            bookArray.push(formatbook(bookId, title, author, publisher, publishDate))
+            bookArray.push({bookId: bookId, title: title, author: author, publisher: publisher, publishDate: publishDate})
           }
         }
     } catch (err) {
@@ -52,7 +52,7 @@ app.post('/api/people', asyncHandler(async (req, res, next) => {
   };
   await sendGetRequest()
   // console.log(bookArray)
-  // console.log(bookArray.length)
+  console.log(bookArray.length)
   res.send(bookArray)
 }));
 
