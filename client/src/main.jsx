@@ -6,6 +6,7 @@ import FormatBtn from './formatbtn'
 import MediaType from './mediatype'
 import TitleText from './title'
 import PageInput from './pagenumber'
+import ResultsData from './handledata'
 import { BrowserRouter as Router } from "react-router-dom"
 // import './index.css'
 import './App.css'
@@ -15,10 +16,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <div className='root-wrap'>
     <TitleText />
     <div className='tool-bar'>
+      <MediaType />
       <FetchedSearchList />
       <PageInput />
       <FormatBtn />
-      <MediaType />
     </div>
     <ResultText />
     </div>

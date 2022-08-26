@@ -1,36 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import ResultText from './textarea'
-import HandleData from './handleselection';
+import ResultsData from './handledata'
+// import {HandleSearchData} from './handledata';
 import './App.css'
 
-
-// function handleDropdownClickOut(ref){
-//   const [isSelected, setIsSelected] = useState(false)
-
-//   useEffect(() => {
-//     function handleClickOutside(event) {
-//       console.log(ref.current.children)
-//       if (ref.current && !ref.current.contains(event.target)) {
-//         ref.current.children[2].style.display = "none"
-//       } 
-//       else if (ref.current) {
-//         ref.current.children[2].style.display = "block"
-//       }
-//     }
-//     // Bind the event listener
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       // Unbind the event listener on clean up
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   },[ref])
-// }
 
 
 export default function FetchedSearchList(props) {
   const [searchVal, setSearch] = useState('');
   const [resultsVal, setResults] = useState([])
   const [isSelected, setIsSelected] = useState(false)
+  const [selectedVal, setSelected] = useState(<ResultsData mydata ={selectedVal}/>)
 
   const wrapperref = useRef()
 
@@ -48,7 +27,7 @@ export default function FetchedSearchList(props) {
       .then(data => setResults(data))
   } 
     fetchData();
-    document.addEventListener("mousedown", (event) => { if (wrapperref.current && !wrapperref.current.contains(event.target)){setIsSelected(false)}});
+    document.addEventListener("mousedown", (event) => {if (wrapperref.current && !wrapperref.current.contains(event.target)){setIsSelected(false)}});
   }, [searchVal]);
 
   return (
@@ -68,8 +47,12 @@ export default function FetchedSearchList(props) {
     </div>
     {isSelected &&
     <div className='selection-stack'>
-    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {HandleData(i), setIsSelected(false)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
+    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {<ResultsData mydata ="mydata"/>, setIsSelected(false), setSearch(resultsVal[item].title)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
     </div>}
+    {/* {isSelected &&
+    <div className='selection-stack' mydata ="mydata">
+    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {HandleSearchData(resultsVal[item]), setIsSelected(false), setSearch(resultsVal[item].title)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
+    </div>} */}
     </div>
     </>
     );
