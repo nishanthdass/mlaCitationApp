@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import './App.css'
 
 
-export default function MediaType(props) {
-  const [selectedOption, setSelectedOption] = useState(["Print", "Web", "DVD"])
+export default function MediaType({setMedia}) {
+  const [selectedMediaOptions, setSelectedOptions] = useState(["Print", "Web", "DVD"])
   // console.log(selectedOption)
   // let option = selectedOption.map( option => option)
   // console.log(option)
   function handleSelectOption(e){
-    console.log(selectedOption[e.target.value])
+    console.log(selectedMediaOptions[e.target.value])
 
   }
   return (
     <>
     <div className='select-media'>
     <label htmlFor="select-media-id">Media:</label>
-    <select id="select-media-id" onChange={e => handleSelectOption(e)}> 
+    <select id="select-media-id" onChange={(e)=> setMedia(selectedMediaOptions[e.target.value])}> 
     {
-        selectedOption.map((address, key) => <option key={key}value={key}>{address}</option>)
+        selectedMediaOptions.map((address, key) => <option key={key}value={key}>{address}</option>)
       }
     </select>
     </div>

@@ -1,15 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
-import ResultsData from './handledata'
-// import {HandleSearchData} from './handledata';
+import {HandleSearchData} from './handledata';
 import './App.css'
 
 
 
-export default function FetchedSearchList(props) {
+export default function FetchedSearchList({setSelectedData}) {
   const [searchVal, setSearch] = useState('');
   const [resultsVal, setResults] = useState([])
   const [isSelected, setIsSelected] = useState(false)
-  const [selectedVal, setSelected] = useState(<ResultsData mydata ={selectedVal}/>)
+  const [selectedVal, setSelected] = useState([])
 
   const wrapperref = useRef()
 
@@ -30,6 +29,12 @@ export default function FetchedSearchList(props) {
     document.addEventListener("mousedown", (event) => {if (wrapperref.current && !wrapperref.current.contains(event.target)){setIsSelected(false)}});
   }, [searchVal]);
 
+  useEffect(() => {
+    HandleSearchData(selectedVal)
+    // <HandleSearchData mydata = {selectedVal} />
+  }, [selectedVal]);
+
+
   return (
     <>
     <div className='search-wrap' ref={wrapperref}>
@@ -47,13 +52,11 @@ export default function FetchedSearchList(props) {
     </div>
     {isSelected &&
     <div className='selection-stack'>
-    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {<ResultsData mydata ="mydata"/>, setIsSelected(false), setSearch(resultsVal[item].title)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
+    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {setSelectedData(resultsVal[item]), setIsSelected(false), setSearch(resultsVal[item].title)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
     </div>}
-    {/* {isSelected &&
-    <div className='selection-stack' mydata ="mydata">
-    {Object.keys(resultsVal).map( (item, i) => <div onClick={() => {HandleSearchData(resultsVal[item]), setIsSelected(false), setSearch(resultsVal[item].title)}} key={i} className="selection"><div className='div-header'>{resultsVal[item].title}</div><div className='div-body'>{resultsVal[item].bookId}, {resultsVal[item].author}</div></div>)}
-    </div>} */}
+
     </div>
+
     </>
     );
   };

@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import './App.css'
 
-const ResultsData = (props) => {
-  console.log(props)
-  return <h1></h1>
+
+export function Citation(props) {
+
+    return (
+      <>
+      <div className='button-wrap'>
+      <br></br>
+      <button onClick={() => {console.log(props.selectedMedia, props.selectedData, props.selectedPage, props.selectedFormat )}} type="button">Cite</button>
+      </div>
+      </>
+      )
+  }
+
+
+export const HandleSearchData = (clickdata) => {
+  // let data = new Citation(this.props.clickdata)
+  console.log(clickdata)
 }
 
-export default ResultsData
 
 // export function HandleSearchData(data) {
 //   // const [dataVal, setData] = useState([]);
