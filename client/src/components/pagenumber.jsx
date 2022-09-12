@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css'
+import '../App.css'
 
 
 export default function PageInput({setPage}) {
@@ -8,7 +8,7 @@ export default function PageInput({setPage}) {
   return (
     <>
     <div className='page-number-wrap'>
-    <label htmlFor="page-input">page num:</label>
+    <div className='page-label'><label htmlFor="page-input">Page num:</label></div>
     <input className='page-input' type='text' onChange = {e=> setPage(e.target.value)}id="page-input-id"/> 
     </div>
     </>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css'
+import '../App.css'
 
 
 export default function MediaType({setMedia}) {
@@ -14,7 +14,7 @@ export default function MediaType({setMedia}) {
   return (
     <>
     <div className='select-media'>
-    <label htmlFor="select-media-id">Media:</label>
+    <div className='media-label'><label htmlFor="select-media-id">Media:</label></div>
     <select id="select-media-id" onChange={(e)=> setMedia(selectedMediaOptions[e.target.value])}> 
     {
         selectedMediaOptions.map((address, key) => <option key={key}value={key}>{address}</option>)
