@@ -9,7 +9,7 @@ export function CitationButton(props) {
       <>
       <div className='button-wrap'>
       <br></br>
-          <button onClick={async () => {console.log(props),await props.setCiteString(await createNewObject(props.selectedMedia, props.selectedData, props.selectedPage, props.selectedFormat, props.selectedData.isbn13, props.selectedData.isbn10 ))}} type="button">Cite</button>
+          <button onClick={async () => {await props.setCiteString(await createNewObject(props.selectedMedia, props.selectedData, props.selectedPage, props.selectedFormat, props.selectedData.isbn13, props.selectedData.isbn10 ))}} type="button">Cite</button>
       </div>
       </>
       )
@@ -37,7 +37,6 @@ class Citation {
     if (this.media === 'Print'){
       // console.log("Print")
       if (this.format === "MLA"){
-        console.log(typeof mlaCite(this.data))
         return mlaCite(this.data)
       }
       if (this.format === "APA"){
@@ -53,31 +52,47 @@ class Citation {
 
 export const HandleSearchData = (clickdata) => {
   // let data = new Citation(this.props.clickdata)
-  console.log(clickdata)
+  // console.log(clickdata)
 }
 
 function mlaCite(data){
+  // console.log(data)
   let authorString = mlaNameParse(data.author)
   let titleString = data.title
-  let publisher = data.publisher
+  let publisher = ""
+  if (data.publisher !== undefined){
+    publisher = data.publisher
+  } else {
+    publisher = "n.p. "
+  }
   let publishDate = data.publishDate.slice(0, 4)
-  let citationString = authorString + titleString+ "." + publisher + ", " + publishDate + "."
+  let citationString = authorString + titleString+ ". " + publisher + ", " + publishDate + "."
   return citationString
 }
 
 function apaCite(data){
   let authorString = apaNameParse(data.author)
   let titleString = data.title
-  let publisher = data.publisher
+  let publisher = ""
+  if (data.publisher !== undefined){
+    publisher = data.publisher
+  } else {
+    publisher = "n.p. "
+  }
   let publishDate = data.publishDate.slice(0, 4)
-  let citationString = authorString + " (" + publishDate + "). "+ titleString + "." + publisher+"."
+  let citationString = authorString + " (" + publishDate + "). "+ titleString + ". " + publisher+"."
   return citationString
 }
 
 async function chicagoCite(data, isbn13, isbn10){
   let authorString = apaNameParse(data.author)
   let titleString = data.title
-  let publisher = data.publisher
+    let publisher = ""
+  if (data.publisher !== undefined){
+    publisher = data.publisher
+  } else {
+    publisher = "n.p. "
+  }
   let publishDate = data.publishDate.slice(0, 4)
   let publishPlace = ""
   let calldata
@@ -110,7 +125,7 @@ async function chicagoCite(data, isbn13, isbn10){
     .then(res => res.json())
     .then(data => calldata = data)
   } 
-  let citationString = authorString + ". " + titleString + ". " + publishPlace + ":" + publisher+"," + publishDate +"."
+  let citationString = authorString + ". " + titleString + ". " + publishPlace + ": " + publisher+"," + publishDate +"."
   return citationString
 
 }

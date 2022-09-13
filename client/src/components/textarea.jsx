@@ -4,21 +4,44 @@ import FetchedSearchList from './searchlist';
 
 
 export default function ResultText(props) {
-  console.log(props);
-  console.log(typeof props.citeString)
   const [citationArray, setCitationArray] = useState([])
-  // const [text, setText] = useState('')
+
+
+  useEffect(() => {
+    chrome.storage.local.get(["chromeStoreage"], function(result) {
+      // console.log(result);
+      // console.log('Value on load ' + result.chromeStoreage);
+      // console.log(typeof result.chromeStoreage)
+      // console.log(Object.values(result))
+      setCitationArray(citationArray => [result.chromeStoreage.map(data => data).join('\n')])
+    });
+  },[])
   
+
   useEffect(() => {
     setCitationArray(citationArray => [...citationArray, props.citeString])
   }, [props.citeString])
-  // let texts = ["hi", "bye", "yes", "no"]
-  console.log(citationArray)
-  // defaultValue={ texts.map(data => data+'\r') }
 
-  
-  // setText("Jibberish")
-  // textAreaEl.current.value = "The is the story of your life. You are an human being, and you're on a website about React Hooks";
+  useEffect(()=> {
+    chrome.storage.local.set({"chromeStoreage": citationArray}, function() {
+      console.log('Value is set to ' + citationArray);
+    });
+    // chrome.storage.local.get(["chromeStoreage"], function(result) {
+    //   console.log(result);
+    //   console.log('Value currently is ' + result.chromeStoreage);
+    // });
+  }, [citationArray])
+
+  // chrome.storage.onChanged.addListener(function (changes, namespace) {
+  //   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+  //     console.log(
+  //       `Storage key "${key}" in namespace "${namespace}" changed.`,
+  //       `Old value was "${oldValue}", new value is "${newValue}".`
+  //     );
+  //   }
+  // });
+
+
   return (
     <>
     <div>

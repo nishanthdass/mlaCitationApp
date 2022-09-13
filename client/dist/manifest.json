@@ -5,6 +5,9 @@
   "action": {
     "default_popup": "index.html"
   },
+  "permissions": [
+    "storage"
+  ],
   "background": {
     "service_worker": "service-worker-loader.js",
     "type": "module"
